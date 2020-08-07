@@ -1,1 +1,14 @@
+{% extends "_layout.html" %}
+{% block content %}
 <h1>Users#new</h1>
+<form action="{{url_for('users.index')}}" method="POST">
+    <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username"/>
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email"/>
+    <label for="password">Password</label>
+    <input type="text" name="password" id="password">
+    <button type="submit">Send</button>
+</form>
+{% endblock %}

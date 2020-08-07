@@ -24,6 +24,32 @@
 
   </head>
   <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Nextagram</a>
+      <ul>
+        {% if current_user.is_authenticated %}
+        <li>
+          <a href="{{ url_for('sessions.destroy')}}">Sign Out</a>
+        </li>
+        {% else %}
+        <li>
+          <a href="{{ url_for('sessions.new')}}">Sign In</a>
+        </li>
+        <li>
+          <a href="{{ url_for('users.new')}}">Sign Up</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     {% block content %}
     {% endblock %}
     <footer>
