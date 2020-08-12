@@ -1,5 +1,59 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1>{{username}}</h1>
-<a href='{{url_for("users.edit",id=current_user.id)}}'><button >Edit</button></a>
+<h1>{{user.username}}</h1>
+<img src="{{user.full_image_path}}" alt="Profile Picture" width="300px">
+{% if current_user.username==user.username%}
+    <a href='{{url_for("users.edit",id=current_user.id)}}'><button >Edit</button></a>
+    <a href='{{url_for("images.edit",id=current_user.id)}}'><button >Add Picture</button></a>
+    {% if current_user.is_private== False %}
+        <form action="{{url_for('users.make_private',id=user.id)}}" method="POST">
+            <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+            <input type="submit" value="Make Private"></input>
+        </form>
+    {% else %}
+        <form action="{{url_for('users.make_public',id=user.id)}}" method="POST">
+            <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+            <input type="submit" value="Make Public">
+        </form>
+    {% endif %}
+{% endif %}
+{% if user.username != current_user.username %}
+    {% if current_user.idols %}
+        {% if current_user.id in user.fans %}
+            <form action="{{url_for('users.unfollow',id=user.id)}}" method="POST">
+                <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+                <input type="submit" value="Unfollow">
+            </form>
+        {% else %}
+            <p>wrong</p>
+            <form action="{{url_for('users.follow',id=user.id)}}" method="POST">
+                <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+                <input type="submit" value="Follow">
+            </form>
+        {% endif %}
+    {% else %}
+        <form action="{{url_for('users.follow',id=user.id)}}" method="POST">
+            <input type="hidden" name="csrf_token" value= "{{ csrf_token() }}">
+            <input type="submit" value="Follow">
+        </form>
+    {% endif %}
+{% endif %}
+{% if user.is_private != True %}
+    <div class="container mx-1 d-flex">
+        {% for image in user.images %}
+            <div class="card card-shadow w-25 m-3">
+                <img src="{{image.full_image_path}}" alt="" width="200px">
+                <ul>
+                    {% for donation in image.donations %}
+                    <li>
+                        <small>{{donation.user_id.username}}</small>
+                        <p>{{donation.amount}}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{url_for('donations.new', image_id=image.id)}}"><button>Donate</button></a>
+            </div>
+        {% endfor %}
+    </div> 
+{% endif %}
 {% endblock %}
