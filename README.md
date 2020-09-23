@@ -1,11 +1,21 @@
-# Flask Nextagram Template
-
-version 0.0.1 (alpha)
-
-## Development
-
-**Make a fork before cloning**
-
+# Flask Nextagram
+This is an instagram copycat built with flask
+## User stories
+1. User authentication
+      - User can sign up and sign in
+      - User can see friendly error messages for unsuccessful signup
+2. User can edit their details
+3. User can upload profile image
+4. User images
+      - User can upload images
+      - User can view other users profiles
+      - User can donate to images
+5. User can sign up/ sign in via google
+6. User can follow other users
+7. User can see feed of images from users they are following (WIP)
+      
+## How to run ?
+**Clone repo**
 **Install dependencies**
 
 - Python 3.7.2 was tested
@@ -152,7 +162,3 @@ Werkzeug==0.14.1
 Remove `certifi==2018.11.29` if you're having trouble installing dependencies.
 
 ---
-
-This repository belongs to [NEXT Academy](https://www.nextacademy.com/?utm_source=github&utm_medium=student-challenge&utm_campaign=flask-nextagram) and is a part of NEXT Academy's coding bootcamps. You may find more information about our bootcamp at https://www.nextacademy.com
-
-If you are already a student, you may find the challenge description at https://code.nextacademy.com/lessons/day-1--starting-template/479
